@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"require\\('@radix-ui/react-tabs'\\); console.log\\('tabs ok'\\)\")",
+      "Bash(node -e \"require\\('@react-three/fiber'\\); require\\('@react-three/drei'\\); console.log\\('OK'\\)\")",
+      "Bash(npm run *)"
+    ]
+  }
+}
