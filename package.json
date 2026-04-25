@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently --names \"UI,Orch,Product,Coach,DB,Plan,Summary,Feas,Inv\" --prefix-colors \"cyan,gray,magenta,yellow,red,purple,magenta,yellow,green\" \"npm run dev:ui\" \"npm run dev:orchestrator\" \"npm run dev:product\" \"npm run dev:coach\" \"npm run dev:database\" \"npm run dev:planner\" \"npm run dev:summary\" \"npm run dev:feasibility\" \"npm run dev:investment\"",
+    "dev": "concurrently --names \"UI,RAG,Orch,Product,Coach,DB,Plan,Summary,Feas,Inv\" --prefix-colors \"cyan,blue,gray,magenta,yellow,red,purple,magenta,yellow,green\" \"npm run dev:ui\" \"npm run dev:rag\" \"npm run dev:orchestrator\" \"npm run dev:product\" \"npm run dev:coach\" \"npm run dev:database\" \"npm run dev:planner\" \"npm run dev:summary\" \"npm run dev:feasibility\" \"npm run dev:investment\"",
     "dev:ui": "next dev --turbopack",
+    "dev:rag": "agents\\.venv\\Scripts\\python agents/rag_mcp_server.py",
     "dev:orchestrator": "agents\\.venv\\Scripts\\python agents/orchestrator.py",
     "dev:product": "agents\\.venv\\Scripts\\python agents/product_agent.py",
     "dev:coach": "agents\\.venv\\Scripts\\python agents/coach_agent.py",
@@ -33,6 +34,7 @@
     "@radix-ui/react-tabs": "^1.1.3",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.0",
+    "@supabase/supabase-js": "^2.104.1",
     "@types/three": "^0.184.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -44,6 +46,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "recharts": "^3.8.1",
+    "swr": "^2.4.1",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.184.0"
