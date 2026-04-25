@@ -73,6 +73,7 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
     setInvestmentData,
     setSelectedSiteOption,
     setExpansionFeasibilityData,
+    setSelectedMarketStrategy,
   } = useFinancialData();
 
   useEffect(() => {
@@ -220,6 +221,7 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
             onInvestmentUpdate={setInvestmentData}
             onSelectedSiteUpdate={setSelectedSiteOption}
             onExpansionFeasibilityUpdate={setExpansionFeasibilityData}
+            onSelectedMarketStrategyUpdate={setSelectedMarketStrategy}
           />
         </div>
       </div>

@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
   const investmentAgentUrl = process.env.INVESTMENT_AGENT_URL || "http://localhost:9012";
   const siteSelectionAgentUrl = process.env.SITE_SELECTION_AGENT_URL || "http://localhost:9020";
   const expansionFeasibilityAgentUrl = process.env.EXPANSION_FEASIBILITY_AGENT_URL || "http://localhost:9021";
+  const marketResearcherAgentUrl = process.env.MARKET_RESEARCHER_AGENT_URL || "http://localhost:9022";
 
   // STEP 2: Define orchestrator URL (speaks AG-UI Protocol)
   const orchestratorUrl = process.env.ORCHESTRATOR_URL || "http://localhost:9000";
@@ -55,6 +56,7 @@ export async function POST(request: NextRequest) {
       investmentAgentUrl,
       siteSelectionAgentUrl,
       expansionFeasibilityAgentUrl,
+      marketResearcherAgentUrl,
     ],
 
     orchestrationAgent,
@@ -72,6 +74,7 @@ export async function POST(request: NextRequest) {
       - Investment Agent (ADK): Recommends investment strategies based on profile.
       - Site Selection Expert Agent (ADK): Analyses Malaysian mall/commercial locations for F&B kiosk expansion. Returns 3 candidate sites with foot traffic, rent, competition scores, pros and cons.
       - Expansion Feasibility Agent (ADK): Projects financial feasibility for a selected F&B kiosk expansion location. Returns monthly revenue, profit, break-even timeline, ROI, and risk classification. Use the exact name "Expansion Feasibility Agent" when calling this agent.
+      - Market Researcher (ADK): Analyses competitor market segments and demographics for a chosen location. Returns 3 market strategy options (Premium/Value/Niche) for the user to select. Use the exact name "Market Researcher" when calling this agent.
 
       WORKFLOW STRATEGY (SEQUENTIAL):
 
@@ -98,6 +101,9 @@ export async function POST(request: NextRequest) {
          - Step 5: Confirm the selection and tell the user their chosen location.
          - Step 6: Call Expansion Feasibility Agent with the selected location's metrics (name, rent, foot traffic, competitor count, scores).
          - Step 7: Call 'display_expansion_feasibility' with the full agent JSON response to show the projection card.
+         - Step 8: Call Market Researcher with the selected location name, coordinates, and targetArea.
+         - Step 9: Call 'display_market_strategy_options' with the full agent JSON response to show the HITL strategy selection card.
+         - Step 10: Wait for user to select a strategy (respond() will fire with the selected strategy).
          - DO NOT trigger the financial planning flow for this.
 
       3. **Ad-Hoc Product Shopping / Quick Advice**:

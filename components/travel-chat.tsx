@@ -17,6 +17,8 @@ import type {
   FeasibilityData,
   InvestmentStrategyData,
   SiteSelectionData,
+  MarketStrategyData,
+  MarketStrategyOption,
 } from "./types";
 
 import { MessageToA2A } from "./a2a/MessageToA2A";
@@ -32,6 +34,8 @@ import { SiteSelectionCard } from "./SiteSelectionCard";
 import { ExpansionFeasibilityCard } from "./ExpansionFeasibilityCard";
 import type { ExpansionFeasibilityData } from "./ExpansionFeasibilityCard";
 import { normalizeSiteSelectionData } from "./site-selection-utils";
+import { MarketStrategyOptionsCard } from "./MarketStrategyOptionsCard";
+import { MarketStrategyCard } from "./MarketStrategyCard";
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -45,6 +49,7 @@ const ChatInner = (props: TravelChatProps) => {
     onInvestmentUpdate,
     onSelectedSiteUpdate,
     onExpansionFeasibilityUpdate,
+    onSelectedMarketStrategyUpdate,
   } = props;
 
   // ── Shared agent state (co-agent sync) ──────────────────────────────────────
@@ -290,6 +295,55 @@ const ChatInner = (props: TravelChatProps) => {
           }
         : undefined;
       return <SiteSelectionCard data={data} respond={wrappedRespond} />;
+    },
+  });
+
+  // ── HITL: Market strategy selection card ────────────────────────────────────
+  useCopilotAction({
+    name: "display_market_strategy_options",
+    description: "Display 3 market positioning strategy options for the user to choose from",
+    parameters: [
+      { name: "agentName",     type: "string",   required: false },
+      { name: "actionType",    type: "string",   required: false },
+      { name: "locationName",  type: "string",   required: false },
+      { name: "targetArea",    type: "string",   required: false },
+      { name: "userPrompt",    type: "string",   required: false },
+      { name: "strategies",    type: "object[]", required: false },
+      { name: "nextStep",      type: "string",   required: false },
+    ],
+    renderAndWaitForResponse: ({ args, respond }) => {
+      const data = args as unknown as MarketStrategyData;
+      if (!data?.strategies?.length || !Array.isArray(data.strategies)) return <></>;
+      const wrappedRespond = respond
+        ? (selection: object) => {
+            const opt = data.strategies.find(
+              (s) => s.strategyId === (selection as any).selectedStrategyId
+            );
+            if (opt) onSelectedMarketStrategyUpdate?.(opt);
+            respond(selection);
+          }
+        : undefined;
+      return <MarketStrategyOptionsCard data={data} respond={wrappedRespond} />;
+    },
+  });
+
+  // ── Display: Selected market strategy on canvas ──────────────────────────────
+  useCopilotAction({
+    name: "display_market_strategy",
+    description: "Display the selected market strategy on the canvas",
+    available: "frontend",
+    parameters: [
+      { name: "data",         type: "object", description: "Selected strategy data" },
+      { name: "locationName", type: "string", required: false },
+    ],
+    render: ({ args }) => {
+      if (!args.data) return <></>;
+      return (
+        <MarketStrategyCard
+          data={args.data as MarketStrategyOption}
+          locationName={args.locationName as string | undefined}
+        />
+      );
     },
   });
 

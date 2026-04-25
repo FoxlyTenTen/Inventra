@@ -9,6 +9,7 @@ import type {
   FeasibilityData,
   InvestmentStrategyData,
   SiteSelectionOption,
+  MarketStrategyOption,
 } from "./types";
 import type { ExpansionFeasibilityData } from "./ExpansionFeasibilityCard";
 
@@ -21,6 +22,7 @@ interface FinancialDataState {
   investmentData: InvestmentStrategyData | null;
   selectedSiteOption: SiteSelectionOption | null;
   expansionFeasibilityData: ExpansionFeasibilityData | null;
+  selectedMarketStrategy: MarketStrategyOption | null;
   setProductData: (d: ProductResearchData | null) => void;
   setFinancialPlanData: (d: FinancialPlanData | null) => void;
   setMasterPlanData: (d: MasterFinancialPlanData | null) => void;
@@ -29,6 +31,7 @@ interface FinancialDataState {
   setInvestmentData: (d: InvestmentStrategyData | null) => void;
   setSelectedSiteOption: (d: SiteSelectionOption | null) => void;
   setExpansionFeasibilityData: (d: ExpansionFeasibilityData | null) => void;
+  setSelectedMarketStrategy: (d: MarketStrategyOption | null) => void;
 }
 
 const FinancialDataContext = createContext<FinancialDataState | null>(null);
@@ -42,6 +45,7 @@ export function FinancialDataProvider({ children }: { children: React.ReactNode 
   const [investmentData, setInvestmentData] = useState<InvestmentStrategyData | null>(null);
   const [selectedSiteOption, setSelectedSiteOption] = useState<SiteSelectionOption | null>(null);
   const [expansionFeasibilityData, setExpansionFeasibilityData] = useState<ExpansionFeasibilityData | null>(null);
+  const [selectedMarketStrategy, setSelectedMarketStrategy] = useState<MarketStrategyOption | null>(null);
 
   return (
     <FinancialDataContext.Provider
@@ -54,6 +58,7 @@ export function FinancialDataProvider({ children }: { children: React.ReactNode 
         investmentData,
         selectedSiteOption,
         expansionFeasibilityData,
+        selectedMarketStrategy,
         setProductData,
         setFinancialPlanData,
         setMasterPlanData,
@@ -62,6 +67,8 @@ export function FinancialDataProvider({ children }: { children: React.ReactNode 
         setInvestmentData,
         setSelectedSiteOption,
         setExpansionFeasibilityData,
+        selectedMarketStrategy,
+        setSelectedMarketStrategy,
       }}
     >
       {children}

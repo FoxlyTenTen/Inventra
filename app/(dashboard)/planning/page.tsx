@@ -13,6 +13,7 @@ import { SelectedSiteCard } from "@/components/SelectedSiteCard";
 import { SiteMapCard } from "@/components/SiteMapCard";
 import { DownloadReportButton } from "@/components/DownloadReportButton";
 import { ExpansionFeasibilityCard } from "@/components/ExpansionFeasibilityCard";
+import { MarketStrategyCard } from "@/components/MarketStrategyCard";
 
 export default function PlanningPage() {
   const {
@@ -24,6 +25,7 @@ export default function PlanningPage() {
     investmentData,
     selectedSiteOption,
     expansionFeasibilityData,
+    selectedMarketStrategy,
     setFinancialPlanData,
     setSummaryPlanData,
     setFeasibilityData,
@@ -56,6 +58,19 @@ export default function PlanningPage() {
       label: "Expansion Feasibility",
       icon: "💰",
       node: <ExpansionFeasibilityCard data={expansionFeasibilityData} />,
+    });
+  }
+  if (selectedMarketStrategy) {
+    slides.push({
+      id: "market-strategy",
+      label: "Market Strategy",
+      icon: "🎯",
+      node: (
+        <MarketStrategyCard
+          data={selectedMarketStrategy}
+          locationName={selectedSiteOption?.name}
+        />
+      ),
     });
   }
   if (summaryPlanData) {

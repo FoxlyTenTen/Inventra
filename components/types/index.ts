@@ -209,6 +209,32 @@ export interface SiteSelectionData {
   nextStep: string;
 }
 
+// Market Strategy Data
+export interface MarketStrategyOption {
+  strategyId: string;
+  name: string;
+  positioning: string;
+  targetCustomer: string;
+  marketAnalysis: { tam: number; sam: number; growthRate: string };
+  customerProfile: string;
+  pricingStrategy: { pricePoint: string; aov: number; profitMargin: number };
+  marketingApproach: { cac: number; ltv: number; monthlyBudget: number };
+  growthTactics: string[];
+  pros: string[];
+  cons: string[];
+  marketOpportunity: { opportunityScore: number; growthPotential: string; timelineToDominance: string };
+}
+
+export interface MarketStrategyData {
+  agentName: string;
+  actionType: string;
+  locationName: string;
+  targetArea: string;
+  userPrompt: string;
+  strategies: MarketStrategyOption[];
+  nextStep: string;
+}
+
 // Investment Data
 export interface InvestmentStrategyData {
   strategyName: string;
@@ -240,6 +266,7 @@ export interface TravelChatProps {
   onInvestmentUpdate?: (data: InvestmentStrategyData | null) => void;
   onSelectedSiteUpdate?: (data: SiteSelectionOption) => void;
   onExpansionFeasibilityUpdate?: (data: import("../ExpansionFeasibilityCard").ExpansionFeasibilityData) => void;
+  onSelectedMarketStrategyUpdate?: (data: MarketStrategyOption) => void;
 }
 
 export interface AgentStyle {

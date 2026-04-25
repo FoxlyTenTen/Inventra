@@ -152,6 +152,10 @@ Workflow:
 6. Immediately call Expansion Feasibility Agent with ALL of the selected location's metrics
    (include: selectedName, rentMonthlyRM, footTrafficDaily, competitorCount, driveTimeFromCityCentre, overallScore)
 7. Call display_expansion_feasibility with the full agent JSON response to show the projection card
+8. Immediately call Market Researcher with the selected location name, coordinates (lat/lng from the site option if available), and targetArea
+9. Call display_market_strategy_options with the full agent JSON response to show the HITL strategy selection card
+10. Wait for the user to select a strategy (respond() will fire with the selected strategy)
+11. Confirm the chosen strategy to the user
 
 NEVER use RAG or SQL tools for expansion requests.
 
