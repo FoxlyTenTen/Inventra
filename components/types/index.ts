@@ -169,6 +169,39 @@ export interface FeasibilityData {
   feedback_message: string;
 }
 
+// Site Selection Data
+export interface SiteSelectionOption {
+  optionId: string;
+  name: string;
+  type: string;
+  summary: string;
+  metrics: {
+    footTrafficDaily: number;
+    rentMonthlyRM: number;
+    competitorCount: number;
+    populationNearby: number;
+    driveTimeFromCityCentre: string;
+  };
+  scores: {
+    footTrafficScore: number;
+    affordabilityScore: number;
+    competitionScore: number;
+    growthScore: number;
+    overallScore: number;
+  };
+  pros: string[];
+  cons: string[];
+}
+
+export interface SiteSelectionData {
+  agentName: string;
+  actionType: string;
+  targetArea: string;
+  userPrompt: string;
+  options: SiteSelectionOption[];
+  nextStep: string;
+}
+
 // Investment Data
 export interface InvestmentStrategyData {
   strategyName: string;

@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
   const summaryAgentUrl = process.env.SUMMARY_AGENT_URL || "http://localhost:9010";
   const feasibilityAgentUrl = process.env.FEASIBILITY_AGENT_URL || "http://localhost:9011";
   const investmentAgentUrl = process.env.INVESTMENT_AGENT_URL || "http://localhost:9012";
+  const siteSelectionAgentUrl = process.env.SITE_SELECTION_AGENT_URL || "http://localhost:9020";
 
   // STEP 2: Define orchestrator URL (speaks AG-UI Protocol)
   const orchestratorUrl = process.env.ORCHESTRATOR_URL || "http://localhost:9000";
@@ -51,6 +52,7 @@ export async function POST(request: NextRequest) {
       summaryAgentUrl,
       feasibilityAgentUrl,
       investmentAgentUrl,
+      siteSelectionAgentUrl,
     ],
 
     orchestrationAgent,
@@ -66,7 +68,8 @@ export async function POST(request: NextRequest) {
       - Summary Agent (ADK): Displays a real-time dashboard summary of user input.
       - Feasibility Agent (ADK): Deterministically checks plan feasibility (math-based).
       - Investment Agent (ADK): Recommends investment strategies based on profile.
-      
+      - Site Selection Expert Agent (ADK): Analyses Malaysian mall/commercial locations for F&B kiosk expansion. Returns 3 candidate sites with foot traffic, rent, competition scores, pros and cons.
+
       WORKFLOW STRATEGY (SEQUENTIAL):
 
       1. **Financial Planning Master Flow**:
@@ -82,6 +85,15 @@ export async function POST(request: NextRequest) {
          - Trigger: "I spent $50", "List my expenses".
          - Add: Call 'gather_transaction_details' -> Database Agent ('add_transaction').
          - View: Call Database Agent ('get_user_transactions') -> Show results.
+
+      4. **Business Location Expansion**:
+         - Trigger: "I want to expand my business location", "open a second kiosk", "new outlet", "site selection", "find me a new location", "expand my business".
+         - Step 1: Call 'gather_expansion_details' (HITL form — collects targetArea, budgetRange, businessType). Wait for user to submit.
+         - Step 2: Call Site Selection Expert Agent with the submitted form data (targetArea, budgetRange, businessType).
+         - Step 3: The agent returns JSON with 3 location options. Call 'display_site_selection_options' with the full agent response to show the HITL selection card.
+         - Step 4: Wait for user to select a location option (respond() will fire).
+         - Step 5: Confirm the selection and tell the user their chosen location.
+         - DO NOT trigger the financial planning flow for this.
 
       3. **Ad-Hoc Product Shopping / Quick Advice**:
          - Trigger: queries like "Can I afford x?", "Check price of y", "Is buying z good?".

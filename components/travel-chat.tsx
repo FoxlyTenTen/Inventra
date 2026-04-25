@@ -25,17 +25,20 @@ import type {
   SummaryPlanData,
   FeasibilityData,
   InvestmentStrategyData,
+  SiteSelectionData,
 } from "./types";
 import { MessageToA2A } from "./a2a/MessageToA2A";
 import { MessageFromA2A } from "./a2a/MessageFromA2A";
 
 import { FinancialPlanningForm } from "./forms/FinancialPlanningForm";
+import { ExpansionDetailsForm } from "./forms/ExpansionDetailsForm";
 
 import { ProductCard } from "./ProductCard";
 import { MasterPlanCard } from "./MasterPlanCard";
 import { SummaryPlanCard } from "./SummaryPlanCard";
 import { FeasibilityCard } from "./FeasibilityCard";
 import { InvestmentCard } from "./InvestmentCard";
+import { SiteSelectionCard } from "./SiteSelectionCard";
 
 
 // Import useCoAgent from CopilotKit
@@ -328,15 +331,93 @@ const ChatInner = (props: TravelChatProps) => {
     },
   });
 
+  // HITL Step 1: gather expansion details (form before agent runs)
+  useCopilotAction({
+    name: "gather_expansion_details",
+    description: "Gather business location expansion details from the user (target area, budget, business type)",
+    parameters: [
+      {
+        name: "targetArea",
+        type: "string",
+        description: "Target area or city for expansion",
+        required: false,
+      },
+      {
+        name: "budgetRange",
+        type: "string",
+        description: "Monthly rent budget range (low, moderate, high)",
+        required: false,
+      },
+      {
+        name: "businessType",
+        type: "string",
+        description: "Type of business (e.g. F&B Kiosk, Bubble Tea)",
+        required: false,
+      },
+    ],
+    renderAndWaitForResponse: ({ args, respond }) => {
+      return <ExpansionDetailsForm args={args} respond={respond} />;
+    },
+  });
+
+  // HITL Step 2: show 3 location options — user picks one, respond() sends selection back
+  useCopilotAction({
+    name: "display_site_selection_options",
+    description: "Display 3 candidate location options for the user to choose from",
+    parameters: [
+      {
+        name: "agentName",
+        type: "string",
+        description: "Agent name",
+        required: false,
+      },
+      {
+        name: "actionType",
+        type: "string",
+        description: "Action type identifier",
+        required: false,
+      },
+      {
+        name: "targetArea",
+        type: "string",
+        description: "Target area",
+        required: false,
+      },
+      {
+        name: "userPrompt",
+        type: "string",
+        description: "User-facing prompt",
+        required: false,
+      },
+      {
+        name: "options",
+        type: "object[]",
+        description: "Array of 3 location options",
+        required: false,
+      },
+      {
+        name: "nextStep",
+        type: "string",
+        description: "Next step description",
+        required: false,
+      },
+    ],
+    renderAndWaitForResponse: ({ args, respond }) => {
+      const data = args as unknown as SiteSelectionData;
+      if (!data?.options?.length) return <></>;
+      return <SiteSelectionCard data={data} respond={respond} />;
+    },
+  });
+
   return (
     <div className="h-full">
       <CopilotChat
         className="h-full"
         labels={{
           initial:
-            "👋 Hi! I'm your Personal Financial Assistant.\n\nI can help you create a financial plan, track expenses, and find deals on products!",
+            "👋 Hi! I'm your Personal Financial Assistant.\n\nI can help you create a financial plan, track expenses, find deals on products, and analyse business expansion locations!",
         }}
-        instructions="You are a helpful Financial Assistant. Help users plan their finances, track expenses, and research products."
+        instructions="You are a helpful Financial Assistant. Help users plan their finances, track expenses, research products, and analyse business expansion locations."
       />
     </div>
   );
