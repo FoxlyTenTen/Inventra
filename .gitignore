@@ -5,6 +5,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.claude
 
 # Dependencies
 node_modules/
@@ -109,7 +110,10 @@ Desktop.ini
 .secrets/
 secrets.json
 
-# Documentation (but keep README)
+# Documentation (keep only README)
+*.md
+!README.md
+supabase_multi_location.sql
 docs/
 examples/
 starter/
