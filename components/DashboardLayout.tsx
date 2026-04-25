@@ -27,7 +27,7 @@ import { Input } from './ui/input';
 import dynamic from 'next/dynamic';
 import { FinancialDataProvider, useFinancialData } from './FinancialDataContext';
 
-const TravelChat = dynamic(() => import('@/components/travel-chat'), { ssr: false });
+import { RagChatbot } from './RagChatbot';
 
 const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard Overview', path: '/' },
@@ -196,29 +196,18 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      {/* Right: Persistent Chat Panel */}
-      <div className="w-[400px] shrink-0 border-l border-border bg-card flex flex-col overflow-hidden">
-        <div className="p-4 border-b border-border bg-muted/30 shrink-0">
-          <h2 className="text-base font-semibold">Planning Assistant</h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            <span className="text-primary font-medium">Orchestrator</span> + <span className="text-primary/70 font-medium">Specialists</span>
-          </p>
+      {/* Right: Persistent Chat Panel (Hidden on Location page for full-screen map) */}
+      {pathname !== '/location' && (
+        <div className="w-[400px] shrink-0 border-l border-border bg-card flex flex-col overflow-hidden hidden xl:flex">
+          <div className="p-4 border-b border-border bg-muted/30 shrink-0">
+            <h2 className="text-base font-semibold">Planning Assistant</h2>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              <span className="text-primary font-medium">Orchestrator</span> + <span className="text-primary/70 font-medium">Specialists</span>
+            </p>
+          </div>
+            <RagChatbot />
         </div>
-        <div className="flex-1 overflow-hidden">
-          <TravelChat
-            financialPlanData={financialPlanData}
-            summaryPlanData={summaryPlanData}
-            feasibilityData={feasibilityData}
-            investmentData={investmentData}
-            onProductUpdate={setProductData}
-            onFinancialPlanUpdate={setFinancialPlanData}
-            onMasterPlanUpdate={setMasterPlanData}
-            onSummaryPlanUpdate={setSummaryPlanData}
-            onFeasibilityUpdate={setFeasibilityData}
-            onInvestmentUpdate={setInvestmentData}
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 }

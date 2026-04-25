@@ -18,8 +18,7 @@ import {
   Send,
   X
 } from 'lucide-react';
-import { CopilotKit, useCopilotReadable, useCopilotAction, useCopilotChat } from "@copilotkit/react-core";
-import { TextMessage, MessageRole } from "@copilotkit/runtime-client-gql";
+// Removed legacy CopilotKit imports
 import { 
   Card, 
   CardContent, 
