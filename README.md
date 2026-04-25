@@ -2,6 +2,20 @@
 
 > AI-Powered F&B Kiosk Operations Intelligence for Malaysian Mall Operators
 
+**Team SevenAteNine** | UM Hackathon 2026
+
+[![Pitch Video](https://img.shields.io/badge/Watch%20Our%20Pitch-YouTube-red?style=for-the-badge&logo=youtube)](https://youtu.be/_m998zof9Lk)
+
+---
+
+## Overview of Inventra
+
+![Inventra Dashboard](Inventra1.png)
+![Inventra Planning Canvas](Inventra2.png)
+![Inventra Inventory](Inventra3.png)
+
+---
+
 Inventra is a full-stack AI platform built for F&B kiosk owners operating in Malaysian shopping malls. It combines real-time operations monitoring, ML-powered forecasting, and a multi-agent AI pipeline that guides owners through the entire business expansion process — from site scouting to a final strategic roadmap.
 
 ---
@@ -317,3 +331,14 @@ FORECAST_AGENT_URL=http://localhost:9025
 **RAG table** — pgvector embeddings, queried via `match_rag_documents` RPC
 
 Supported outlets: `outlet-1` (Mid Valley Food Court), `outlet-2` (Sunway Pyramid Kiosk), `outlet-3` (KLCC Food Corner)
+
+---
+
+## Submission
+
+> **UM Hackathon 2026**
+> Built and submitted by **Team SevenAteNine**
+>
+> Inventra was designed, developed, and deployed within the hackathon duration. Every agent, dashboard, and ML pipeline in this repository is original work produced by the team.
+>
+> [Watch our pitch](https://youtu.be/_m998zof9Lk)
