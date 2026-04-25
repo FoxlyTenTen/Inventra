@@ -55,16 +55,6 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
   const { theme, setTheme } = useTheme();
 
   const {
-    financialPlanData,
-    summaryPlanData,
-    feasibilityData,
-    investmentData,
-    setProductData,
-    setFinancialPlanData,
-    setMasterPlanData,
-    setSummaryPlanData,
-    setFeasibilityData,
-    setInvestmentData,
     setSelectedSiteOption,
     setExpansionFeasibilityData,
     setSelectedMarketStrategy,
@@ -87,7 +77,7 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
         } transition-all duration-300 border-r border-border bg-card flex flex-col overflow-hidden shrink-0`}
       >
         <div className="p-6 border-b border-border">
-          <h1 className="font-semibold text-foreground text-lg truncate">KioskIQ</h1>
+          <h1 className="font-semibold text-foreground text-lg truncate">Inventra</h1>
           <p className="text-xs text-muted-foreground mt-1 truncate">AI-Powered Planning</p>
         </div>
 
@@ -121,7 +111,7 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
             </Avatar>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">Admin User</p>
-              <p className="text-xs text-muted-foreground truncate">admin@kioskiq.com</p>
+              <p className="text-xs text-muted-foreground truncate">admin@inventra.com</p>
             </div>
           </div>
         </div>
@@ -195,16 +185,6 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
         </div>
         <div className="flex-1 overflow-hidden">
           <TravelChat
-            financialPlanData={financialPlanData}
-            summaryPlanData={summaryPlanData}
-            feasibilityData={feasibilityData}
-            investmentData={investmentData}
-            onProductUpdate={setProductData}
-            onFinancialPlanUpdate={setFinancialPlanData}
-            onMasterPlanUpdate={setMasterPlanData}
-            onSummaryPlanUpdate={setSummaryPlanData}
-            onFeasibilityUpdate={setFeasibilityData}
-            onInvestmentUpdate={setInvestmentData}
             onSelectedSiteUpdate={setSelectedSiteOption}
             onExpansionFeasibilityUpdate={setExpansionFeasibilityData}
             onSelectedMarketStrategyUpdate={setSelectedMarketStrategy}

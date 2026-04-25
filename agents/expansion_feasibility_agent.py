@@ -47,7 +47,7 @@ def get_malaysia_opr_rate() -> dict:
 
 
 EXPANSION_FEASIBILITY_INSTRUCTION = """
-You are the EXPANSION FINANCIAL FEASIBILITY AGENT for KioskIQ.
+You are the EXPANSION FINANCIAL FEASIBILITY AGENT for Inventra.
 
 You receive data about a selected F&B kiosk expansion location in Malaysia.
 Your job is to produce a detailed financial feasibility analysis.

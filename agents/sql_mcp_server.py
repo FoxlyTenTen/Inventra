@@ -1,5 +1,5 @@
 """
-SQL MCP Server — KioskIQ
+SQL MCP Server — Inventra
 Provides exact numerical data direct from Supabase (no RAG, no vector search).
 Use this for ANY question involving: revenue, order counts, stock quantities,
 comparisons between outlets, totals, averages, or expiry countdowns.
@@ -15,7 +15,7 @@ from supabase import create_client
 load_dotenv()
 
 port = int(os.getenv("SQL_MCP_PORT", 9014))
-mcp = FastMCP("KioskIQ SQL", host="0.0.0.0", port=port)
+mcp = FastMCP("Inventra SQL", host="0.0.0.0", port=port)
 
 sb = create_client(
     os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
@@ -303,5 +303,5 @@ def get_orders_trend(days: int = 10, location_id: str = "all") -> str:
 
 
 if __name__ == "__main__":
-    print(f"Starting KioskIQ SQL MCP Server on http://0.0.0.0:{port}/sse")
+    print(f"Starting Inventra SQL MCP Server on http://0.0.0.0:{port}/sse")
     mcp.run(transport="sse")

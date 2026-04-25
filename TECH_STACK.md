@@ -1,4 +1,4 @@
-# KioskIQ — Tech Stack & Feature Map
+# Inventra — Tech Stack & Feature Map
 
 ---
 
@@ -6,14 +6,15 @@
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════════╗
-║                              KIOSKIQ WEB APP                                    ║
+║                              Inventra WEB APP                                    ║
 ║                        Next.js 16 + React 19 + TypeScript                       ║
 ╠══════════════╦═══════════════════════════════════════╦══════════════════════════╣
 ║              ║                                       ║                          ║
 ║  LEFT        ║         CENTER — MAIN PAGES           ║  RIGHT                   ║
 ║  SIDEBAR     ║                                       ║  CHAT PANEL              ║
 ║              ║                                       ║  (Persistent)            ║
-║  KioskIQ     ║  ┌───────────────────────────────┐   ║  ┌────────────────────┐  ║
+║  Inventra     ║
+  ┌───────────────────────────────┐   ║  ┌────────────────────┐  ║
 ║              ║  │  / — Dashboard Overview        │   ║  │  Planning          │  ║
 ║  Navigation: ║  │  • KPI Cards (5 metrics)       │   ║  │  Assistant         │  ║
 ║              ║  │    - Today's Orders            │   ║  │                    │  ║

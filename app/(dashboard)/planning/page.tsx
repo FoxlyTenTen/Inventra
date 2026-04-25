@@ -3,15 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useFinancialData } from "@/components/FinancialDataContext";
-import { ProductCard } from "@/components/ProductCard";
-import { FinancialPlanCard } from "@/components/FinancialPlanCard";
-import { MasterPlanCard } from "@/components/MasterPlanCard";
-import { SummaryPlanCard } from "@/components/SummaryPlanCard";
-import { FeasibilityCard } from "@/components/FeasibilityCard";
-import { InvestmentCard } from "@/components/InvestmentCard";
 import { SelectedSiteCard } from "@/components/SelectedSiteCard";
 import { SiteMapCard } from "@/components/SiteMapCard";
-import { DownloadReportButton } from "@/components/DownloadReportButton";
 import { ExpansionFeasibilityCard } from "@/components/ExpansionFeasibilityCard";
 import { MarketStrategyCard } from "@/components/MarketStrategyCard";
 import { RiskProfileCard } from "@/components/RiskProfileCard";
@@ -19,28 +12,17 @@ import { StrategicRoadmapCard } from "@/components/StrategicRoadmapCard";
 
 export default function PlanningPage() {
   const {
-    productData,
-    financialPlanData,
-    masterPlanData,
-    summaryPlanData,
-    feasibilityData,
-    investmentData,
     selectedSiteOption,
     expansionFeasibilityData,
     selectedMarketStrategy,
     selectedRiskProfile,
     selectedRoadmap,
     roadmapData,
-    setFinancialPlanData,
-    setSummaryPlanData,
-    setFeasibilityData,
-    setInvestmentData,
   } = useFinancialData();
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const prevSlideCount = useRef(0);
 
-  // Build the ordered slide list from whatever data is available
   type Slide = { id: string; label: string; icon: string; node: React.ReactNode };
   const slides: Slide[] = [];
 
@@ -105,58 +87,7 @@ export default function PlanningPage() {
       ),
     });
   }
-  if (summaryPlanData) {
-    slides.push({
-      id: "summary",
-      label: "Plan Summary",
-      icon: "📊",
-      node: <SummaryPlanCard data={summaryPlanData} onUpdate={setSummaryPlanData} />,
-    });
-  }
-  if (feasibilityData) {
-    slides.push({
-      id: "feasibility",
-      label: "Feasibility Check",
-      icon: "🧮",
-      node: <FeasibilityCard data={feasibilityData} onUpdate={setFeasibilityData} />,
-    });
-  }
-  if (investmentData) {
-    slides.push({
-      id: "investment",
-      label: "Investment Strategy",
-      icon: "📈",
-      node: <InvestmentCard data={investmentData} onUpdate={setInvestmentData} />,
-    });
-  }
-  if (financialPlanData) {
-    slides.push({
-      id: "financial-plan",
-      label: "Financial Plan",
-      icon: "💼",
-      node: (
-        <FinancialPlanCard data={financialPlanData} onUpdate={setFinancialPlanData} />
-      ),
-    });
-  }
-  if (masterPlanData) {
-    slides.push({
-      id: "master-plan",
-      label: "Master Plan",
-      icon: "🎯",
-      node: <MasterPlanCard data={masterPlanData} />,
-    });
-  }
-  if (productData) {
-    slides.push({
-      id: "products",
-      label: "Product Research",
-      icon: "🛍️",
-      node: <ProductCard data={productData} />,
-    });
-  }
 
-  // Auto-advance to the newest slide when a new one arrives
   useEffect(() => {
     if (slides.length > prevSlideCount.current) {
       setCurrentSlide(slides.length - 1);
@@ -164,17 +95,13 @@ export default function PlanningPage() {
     prevSlideCount.current = slides.length;
   }, [slides.length]);
 
-  // Clamp current slide if data is removed
   const safeSlide = Math.min(currentSlide, Math.max(0, slides.length - 1));
-
   const isEmpty = slides.length === 0;
-
   const prev = () => setCurrentSlide((s) => Math.max(0, s - 1));
   const next = () => setCurrentSlide((s) => Math.min(slides.length - 1, s + 1));
 
   return (
     <div className="max-w-4xl mx-auto h-full flex flex-col">
-      {/* Header */}
       <div className="mb-6 flex items-end justify-between">
         <div>
           <h2 className="text-2xl font-bold mb-1">Business Intelligence Canvas</h2>
@@ -184,16 +111,6 @@ export default function PlanningPage() {
               : `${slides.length} result${slides.length > 1 ? "s" : ""} · use arrows to navigate`}
           </p>
         </div>
-
-        {!isEmpty && (
-          <DownloadReportButton
-            masterPlanData={masterPlanData}
-            investmentData={investmentData}
-            feasibilityData={feasibilityData}
-            summaryPlanData={summaryPlanData}
-            financialPlanData={financialPlanData}
-          />
-        )}
       </div>
 
       {isEmpty ? (
@@ -208,7 +125,6 @@ export default function PlanningPage() {
         </div>
       ) : (
         <div className="flex-1 flex flex-col min-h-0">
-          {/* Dot + label breadcrumb */}
           <div className="flex items-center justify-center gap-1.5 mb-5 flex-wrap">
             {slides.map((slide, idx) => (
               <button
@@ -217,7 +133,6 @@ export default function PlanningPage() {
                 className="flex items-center gap-1.5 group"
                 title={slide.label}
               >
-                {/* Connecting line before (skip first) */}
                 {idx > 0 && (
                   <div
                     className={`h-px w-5 rounded-full transition-all duration-300 ${
@@ -237,9 +152,7 @@ export default function PlanningPage() {
                   />
                   <span
                     className={`text-[10px] font-medium transition-colors duration-200 max-w-[60px] text-center leading-tight ${
-                      idx === safeSlide
-                        ? "text-primary"
-                        : "text-muted-foreground"
+                      idx === safeSlide ? "text-primary" : "text-muted-foreground"
                     }`}
                   >
                     {slide.icon} {slide.label}
@@ -249,7 +162,6 @@ export default function PlanningPage() {
             ))}
           </div>
 
-          {/* Slide content */}
           <div className="flex-1 relative overflow-hidden">
             {slides.map((slide, idx) => (
               <div
@@ -268,7 +180,6 @@ export default function PlanningPage() {
             ))}
           </div>
 
-          {/* Prev / Next controls */}
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-border shrink-0">
             <button
               onClick={prev}

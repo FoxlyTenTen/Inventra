@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
     .map((c: { content: string; source_table: string }) => `[${c.source_table}] ${c.content}`)
     .join('\n');
 
-  const systemPrompt = `You are KioskIQ's AI assistant helping F&B kiosk operators at Malaysian malls.
+  const systemPrompt = `You are Inventra's AI assistant helping F&B kiosk operators at Malaysian malls.
 
 ## Live data (fetched directly from database — always accurate)
 ${liveSummary}

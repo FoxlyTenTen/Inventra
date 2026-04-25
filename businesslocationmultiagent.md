@@ -1,4 +1,4 @@
-# KioskIQ — Multi-Agent Business Location Expansion System
+# Inventra — Multi-Agent Business Location Expansion System
 
 > Developer reference for the 5-agent expansion strategy workflow.  
 > Spec source: `CLAUDE_CODE_MULTI_AGENT_PROMPT_COMPLETE.md`

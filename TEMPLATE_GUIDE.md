@@ -1,4 +1,4 @@
-# KioskIQ - 3D Planning Visualization Template
+# Inventra - 3D Planning Visualization Template
 
 This is a clean template for building **planning visualization and 3D analysis applications** using the multi-agent architecture pattern (ADK + A2A Protocol).
 
@@ -121,7 +121,7 @@ Refer to `changeAgent.md` for the complete guide on:
 ## File Structure
 
 ```
-KioskIQ/
+Inventra/
 ├── app/
 │   ├── page.tsx                 # Main page (Planning UI only)
 │   ├── layout.tsx               # Root layout

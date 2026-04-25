@@ -1,6 +1,6 @@
-# Supabase Setup — KioskIQ
+# Supabase Setup — Inventra
 
-Complete setup reference for the KioskIQ Supabase database.
+Complete setup reference for the Inventra Supabase database.
 
 ---
 

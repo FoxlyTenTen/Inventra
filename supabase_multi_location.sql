@@ -1,5 +1,5 @@
 -- ============================================================
--- KioskIQ — Multi-Location + RAG Vector Store Migration
+-- Inventra — Multi-Location + RAG Vector Store Migration
 -- Run this entire script in Supabase SQL Editor
 -- ============================================================
 

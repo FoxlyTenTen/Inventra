@@ -1,5 +1,5 @@
 """
-RAG MCP Server — KioskIQ
+RAG MCP Server — Inventra
 Semantic search over embedded business documents.
 Use ONLY for: general context, narrative descriptions, trend explanations,
 AI insights, and overview summaries.
@@ -16,7 +16,7 @@ from supabase import create_client
 load_dotenv()
 
 port = int(os.getenv("RAG_MCP_PORT", 9013))
-mcp = FastMCP("KioskIQ RAG", host="0.0.0.0", port=port)
+mcp = FastMCP("Inventra RAG", host="0.0.0.0", port=port)
 
 openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 supabase_client = create_client(
@@ -63,5 +63,5 @@ def search_business_context(query: str) -> str:
 
 
 if __name__ == "__main__":
-    print(f"Starting KioskIQ RAG MCP Server on http://0.0.0.0:{port}/sse")
+    print(f"Starting Inventra RAG MCP Server on http://0.0.0.0:{port}/sse")
     mcp.run(transport="sse")

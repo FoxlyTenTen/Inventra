@@ -336,20 +336,6 @@ export interface InvestmentStrategyData {
 // ============================================================================
 
 export interface TravelChatProps {
-  // Data Props (for Shared State Sync)
-  financialPlanData?: FinancialPlanData | null;
-  summaryPlanData?: SummaryPlanData | null;
-  feasibilityData?: FeasibilityData | null;
-  investmentData?: InvestmentStrategyData | null;
-
-  // Update Handlers
-  onProductUpdate?: (data: ProductResearchData | null) => void;
-  onTransactionUpdate?: (data: TransactionData | null) => void;
-  onFinancialPlanUpdate?: (data: FinancialPlanData | null) => void;
-  onMasterPlanUpdate?: (data: MasterFinancialPlanData | null) => void;
-  onSummaryPlanUpdate?: (data: SummaryPlanData | null) => void;
-  onFeasibilityUpdate?: (data: FeasibilityData | null) => void;
-  onInvestmentUpdate?: (data: InvestmentStrategyData | null) => void;
   onSelectedSiteUpdate?: (data: SiteSelectionOption) => void;
   onExpansionFeasibilityUpdate?: (data: import("../ExpansionFeasibilityCard").ExpansionFeasibilityData) => void;
   onSelectedMarketStrategyUpdate?: (data: MarketStrategyOption) => void;

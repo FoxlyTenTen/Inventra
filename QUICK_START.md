@@ -1,4 +1,4 @@
-# 🚀 KioskIQ Planning Template - Quick Start
+# 🚀 Inventra Planning Template - Quick Start
 
 ## What Changed?
 

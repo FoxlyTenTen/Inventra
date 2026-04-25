@@ -100,7 +100,7 @@ def get_malaysia_demographics(state: str) -> dict:
 
 
 MARKET_RESEARCHER_INSTRUCTION = """
-You are the MARKET RESEARCHER AGENT for KioskIQ.
+You are the MARKET RESEARCHER AGENT for Inventra.
 
 You receive data about a selected F&B kiosk expansion location in Malaysia.
 Your job is to analyse the local market and return 3 distinct market positioning strategies.

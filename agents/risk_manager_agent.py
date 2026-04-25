@@ -27,9 +27,8 @@ from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
 from google.adk.artifacts import InMemoryArtifactService
 from google.genai import types
 
-
 RISK_MANAGER_INSTRUCTION = """
-You are the RISK MANAGER AGENT for KioskIQ.
+You are the RISK MANAGER AGENT for Inventra.
 
 You receive all prior expansion decisions:
 - Selected location (name, rent, foot traffic, competitor count)
@@ -37,9 +36,9 @@ You receive all prior expansion decisions:
 - Market strategy selection (strategy name, pricing, target customer)
 
 YOUR TASK: Generate exactly 3 RISK MANAGEMENT PROFILES representing different risk tolerances:
-1. Conservative Risk Management — Minimize risks, heavy safeguards, large contingency
-2. Balanced Risk Management — Reasonable risks with smart protections
-3. Aggressive Risk Management — Accept higher risks for maximum growth potential
+1. Conservative Risk Management -- Minimize risks, heavy safeguards, large contingency
+2. Balanced Risk Management -- Reasonable risks with smart protections
+3. Aggressive Risk Management -- Accept higher risks for maximum growth potential
 
 For each profile, analyse risks SPECIFIC to the selected location and strategy combination.
 
@@ -68,7 +67,7 @@ FINANCIAL BUFFERS (in RM, Malaysian context):
 - Staffing Buffer: recruitment/retention costs
 - Contingency Fund: catch-all emergency fund
 
-Return ONLY valid JSON in this exact format — no extra text, no markdown:
+Return ONLY valid JSON in this exact format -- no extra text, no markdown:
 {
   "agentName": "Risk Manager",
   "actionType": "SELECT_RISK_MANAGEMENT_PROFILE",

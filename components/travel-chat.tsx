@@ -3,19 +3,13 @@
 import React, { useState, useEffect } from "react";
 import { CopilotKit, useCopilotChat } from "@copilotkit/react-core";
 import { CopilotChat } from "@copilotkit/react-ui";
-import { useCopilotAction, useCoAgent } from "@copilotkit/react-core";
+import { useCopilotAction } from "@copilotkit/react-core";
 import "@copilotkit/react-ui/styles.css";
 import "./style.css";
 
 import type {
   TravelChatProps,
-  ProductResearchData,
   MessageActionRenderProps,
-  FinancialPlanData,
-  MasterFinancialPlanData,
-  SummaryPlanData,
-  FeasibilityData,
-  InvestmentStrategyData,
   SiteSelectionData,
   MarketStrategyData,
   MarketStrategyOption,
@@ -27,13 +21,7 @@ import type {
 
 import { MessageToA2A } from "./a2a/MessageToA2A";
 import { MessageFromA2A } from "./a2a/MessageFromA2A";
-import { FinancialPlanningForm } from "./forms/FinancialPlanningForm";
 import { ExpansionDetailsForm } from "./forms/ExpansionDetailsForm";
-import { ProductCard } from "./ProductCard";
-import { MasterPlanCard } from "./MasterPlanCard";
-import { SummaryPlanCard } from "./SummaryPlanCard";
-import { FeasibilityCard } from "./FeasibilityCard";
-import { InvestmentCard } from "./InvestmentCard";
 import { SiteSelectionCard } from "./SiteSelectionCard";
 import { ExpansionFeasibilityCard } from "./ExpansionFeasibilityCard";
 import type { ExpansionFeasibilityData } from "./ExpansionFeasibilityCard";
@@ -54,12 +42,6 @@ import { StrategicRoadmapCard } from "./StrategicRoadmapCard";
 
 const ChatInner = (props: TravelChatProps) => {
   const {
-    onProductUpdate,
-    onFinancialPlanUpdate,
-    onMasterPlanUpdate,
-    onSummaryPlanUpdate,
-    onFeasibilityUpdate,
-    onInvestmentUpdate,
     onSelectedSiteUpdate,
     onExpansionFeasibilityUpdate,
     onSelectedMarketStrategyUpdate,
@@ -68,51 +50,7 @@ const ChatInner = (props: TravelChatProps) => {
     onRoadmapDataUpdate,
   } = props;
 
-  // ── Shared agent state (co-agent sync) ──────────────────────────────────────
-  const { state: financialState, setState: setFinancialState } = useCoAgent<{
-    financial_plan?: FinancialPlanData;
-    summary_plan?: SummaryPlanData;
-    feasibility?: FeasibilityData;
-    investment?: InvestmentStrategyData;
-  }>({ name: "a2a_chat", initialState: {} });
-
-  useEffect(() => {
-    if (props.financialPlanData)
-      setFinancialState({ ...financialState, financial_plan: props.financialPlanData });
-  }, [props.financialPlanData]);
-
-  useEffect(() => {
-    if (props.summaryPlanData)
-      setFinancialState({ ...financialState, summary_plan: props.summaryPlanData });
-  }, [props.summaryPlanData]);
-
-  useEffect(() => {
-    if (props.feasibilityData)
-      setFinancialState({ ...financialState, feasibility: props.feasibilityData });
-  }, [props.feasibilityData]);
-
-  useEffect(() => {
-    if (props.investmentData)
-      setFinancialState({ ...financialState, investment: props.investmentData });
-  }, [props.investmentData]);
-
-  useEffect(() => {
-    if (financialState?.financial_plan &&
-      JSON.stringify(financialState.financial_plan) !== JSON.stringify(props.financialPlanData))
-      props.onFinancialPlanUpdate?.(financialState.financial_plan);
-
-    if (financialState?.summary_plan &&
-      JSON.stringify(financialState.summary_plan) !== JSON.stringify(props.summaryPlanData))
-      props.onSummaryPlanUpdate?.(financialState.summary_plan);
-
-    if (financialState?.feasibility &&
-      JSON.stringify(financialState.feasibility) !== JSON.stringify(props.feasibilityData))
-      props.onFeasibilityUpdate?.(financialState.feasibility);
-
-    if (financialState?.investment &&
-      JSON.stringify(financialState.investment) !== JSON.stringify(props.investmentData))
-      props.onInvestmentUpdate?.(financialState.investment);
-  }, [financialState]);
+  // Financial planning co-agent sync disabled (financial planner agents removed from pipeline)
 
   // ── Extract structured data from A2A result messages ────────────────────────
   const { visibleMessages } = useCopilotChat();
@@ -137,24 +75,11 @@ const ChatInner = (props: TravelChatProps) => {
 
         if (!parsed) continue;
 
-        if (parsed.query && Array.isArray(parsed.results))
-          onProductUpdate?.(parsed as ProductResearchData);
-        else if (parsed.monthlyIncome && Array.isArray(parsed.budgetBreakdown))
-          onFinancialPlanUpdate?.(parsed as FinancialPlanData);
-        else if (parsed.plan_title && Array.isArray(parsed.milestones))
-          onMasterPlanUpdate?.(parsed as MasterFinancialPlanData);
-        else if (parsed.dashboard_message && parsed.timestamp)
-          onSummaryPlanUpdate?.(parsed as SummaryPlanData);
-        else if (parsed.feedback_message && parsed.gap !== undefined) {
-          if (typeof parsed.gap !== "number") parsed.gap = Number(parsed.gap);
-          onFeasibilityUpdate?.(parsed as FeasibilityData);
-        } else if (parsed.allocation && parsed.strategyName)
-          onInvestmentUpdate?.(parsed as InvestmentStrategyData);
-        else if (parsed.agentName === "Expansion Feasibility Agent" && parsed.breakEvenMonths !== undefined)
+        if (parsed.agentName === "Expansion Feasibility Agent" && parsed.breakEvenMonths !== undefined)
           onExpansionFeasibilityUpdate?.(parsed as ExpansionFeasibilityData);
       } catch (_) {}
     }
-  }, [visibleMessages, onProductUpdate, onFinancialPlanUpdate, onMasterPlanUpdate]);
+  }, [visibleMessages, onExpansionFeasibilityUpdate]);
 
   // ── A2A visualiser ───────────────────────────────────────────────────────────
   useCopilotAction({
@@ -173,78 +98,7 @@ const ChatInner = (props: TravelChatProps) => {
     ),
   });
 
-  // ── HITL: Financial planning form ────────────────────────────────────────────
-  useCopilotAction({
-    name: "gather_financial_planning_details",
-    description: "Gather financial planning details from the user",
-    parameters: [
-      { name: "goalDescription",          type: "string", required: false },
-      { name: "planType",                 type: "string", required: false },
-      { name: "monthlyIncome",            type: "number", required: false },
-      { name: "monthlyTargetedExpenses",  type: "number", required: false },
-      { name: "savingGoalEnd",            type: "number", required: false },
-      { name: "riskTolerance",            type: "string", required: false },
-    ],
-    renderAndWaitForResponse: ({ args, respond }) => (
-      <FinancialPlanningForm args={args} respond={respond} />
-    ),
-  });
-
-  // ── Display actions (push data to canvas) ───────────────────────────────────
-  useCopilotAction({
-    name: "display_product_research",
-    description: "Display product research results",
-    available: "frontend",
-    parameters: [{ name: "data", type: "object", description: "Product research data" }],
-    render: ({ args }) => {
-      if (!args.data) return <></>;
-      return <ProductCard data={args.data as ProductResearchData} />;
-    },
-  });
-
-  useCopilotAction({
-    name: "display_master_plan",
-    description: "Display the Master Financial Plan",
-    available: "frontend",
-    parameters: [{ name: "data", type: "object", description: "Master plan data" }],
-    render: ({ args }) => {
-      if (!args.data) return <></>;
-      return <MasterPlanCard data={args.data as MasterFinancialPlanData} />;
-    },
-  });
-
-  useCopilotAction({
-    name: "display_summary_plan",
-    description: "Display the Summary Plan Dashboard",
-    available: "frontend",
-    parameters: [{ name: "data", type: "object", description: "Summary plan data" }],
-    render: ({ args }) => {
-      if (!args.data) return <></>;
-      return <SummaryPlanCard data={args.data as SummaryPlanData} />;
-    },
-  });
-
-  useCopilotAction({
-    name: "display_feasibility_check",
-    description: "Display the Feasibility Check Results",
-    available: "frontend",
-    parameters: [{ name: "data", type: "object", description: "Feasibility data" }],
-    render: ({ args }) => {
-      if (!args.data) return <></>;
-      return <FeasibilityCard data={args.data as FeasibilityData} />;
-    },
-  });
-
-  useCopilotAction({
-    name: "display_investment_strategy",
-    description: "Display the Investment Strategy",
-    available: "frontend",
-    parameters: [{ name: "data", type: "object", description: "Investment strategy data" }],
-    render: ({ args }) => {
-      if (!args.data) return <></>;
-      return <InvestmentCard data={args.data as InvestmentStrategyData} />;
-    },
-  });
+  // Financial planning HITL forms and display actions disabled (agents removed from pipeline)
 
   useCopilotAction({
     name: "display_expansion_feasibility",
@@ -473,9 +327,9 @@ const ChatInner = (props: TravelChatProps) => {
         className="h-full"
         labels={{
           initial:
-            "👋 Hi! I'm your Personal Financial Assistant.\n\nI can help you create a financial plan, track expenses, find deals on products, and analyse business expansion locations!",
+            "👋 Hi! I'm Inventra's Operations Intelligence.\n\nAsk me about your kiosk revenue, stock levels, expiry alerts, demand forecasts, or your next business expansion location!",
         }}
-        instructions="You are a helpful Financial Assistant. Help users plan their finances, track expenses, research products, and analyse business expansion locations."
+        instructions="You are Inventra's Operations Intelligence assistant. Help kiosk owners with revenue data, stock levels, expiry alerts, demand forecasting, and business location expansion planning."
       />
     </div>
   );

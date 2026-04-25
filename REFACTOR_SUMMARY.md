@@ -1,7 +1,7 @@
-# KioskIQ Banking Removal - Refactor Summary
+# Inventra Banking Removal - Refactor Summary
 
 **Date**: 2026-04-23  
-**Purpose**: Convert KioskIQ from a dual-feature app (Banking + Planning) into a **Planning & 3D Visualization Template**
+**Purpose**: Convert Inventra from a dual-feature app (Banking + Planning) into a **Planning & 3D Visualization Template**
 
 ## ✅ Changes Made
 

@@ -334,7 +334,7 @@ export default function DashboardOverview() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
             <ChefHat className="h-7 w-7 text-indigo-500" />
-            KioskIQ Command Centre
+            Inventra Command Centre
           </h1>
           <p className="text-muted-foreground mt-1 text-sm">
             Real-time operations view for all your F&B outlets

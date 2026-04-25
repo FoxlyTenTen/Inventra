@@ -1,7 +1,7 @@
 """
 Forecast & Demand Prediction Agent (ADK + A2A Protocol)
 
-Integrates with KioskIQ ML Service to provide:
+Integrates with Inventra ML Service to provide:
 - Daily order forecasts
 - Expiry & waste risk predictions
 - Reorder quantity recommendations
@@ -462,7 +462,7 @@ def predict_top_selling_items(location_id: str) -> dict:
 # ── Agent instruction ─────────────────────────────────────────────────────────
 
 FORECAST_AGENT_INSTRUCTION = """
-You are the FORECAST & DEMAND PREDICTION AGENT for KioskIQ.
+You are the FORECAST & DEMAND PREDICTION AGENT for Inventra.
 
 You have access to 6 ML-powered prediction tools that connect to live Supabase data and a deployed ML service.
 
@@ -513,7 +513,7 @@ class ForecastAgent:
             model=model_name,
             name="forecast_agent",
             description=(
-                "ML-powered demand forecasting and prediction agent for KioskIQ. "
+                "ML-powered demand forecasting and prediction agent for Inventra. "
                 "Predicts daily orders, revenue, AOV, stockout risk, expiry waste, and top sellers."
             ),
             instruction=FORECAST_AGENT_INSTRUCTION,
@@ -576,7 +576,7 @@ skill = AgentSkill(
 
 public_agent_card = AgentCard(
     name="Forecast Agent",
-    description="ML-powered demand forecasting and prediction for KioskIQ kiosks.",
+    description="ML-powered demand forecasting and prediction for Inventra kiosks.",
     url=f"http://localhost:{port}/",
     version="1.0.0",
     defaultInputModes=["text"],

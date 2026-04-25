@@ -31,7 +31,7 @@ export default function LoginPage() {
               <Brain className="h-7 w-7 text-primary-foreground" />
             </div>
           </div>
-          <h1 className="text-2xl font-semibold">KioskIQ Intelligence</h1>
+          <h1 className="text-2xl font-semibold">Inventra Intelligence</h1>
           <p className="text-muted-foreground mt-2">Sign in to your account</p>
         </div>
 
@@ -49,7 +49,7 @@ export default function LoginPage() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="you@kioskiq.com"
+                    placeholder="you@inventra.com"
                     className="pl-10"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

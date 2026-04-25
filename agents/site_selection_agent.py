@@ -122,9 +122,9 @@ def get_venue_density_foursquare(lat: float, lng: float, radius_m: int = 1000) -
 # ── Instruction ────────────────────────────────────────────────────────────────
 
 SITE_SELECTION_INSTRUCTION = """
-You are the SITE SELECTION EXPERT AGENT for KioskIQ.
+You are the SITE SELECTION EXPERT AGENT for Inventra.
 
-KioskIQ is used by F&B kiosk owners operating in Malaysian shopping malls.
+Inventra is used by F&B kiosk owners operating in Malaysian shopping malls.
 The user wants to expand and open a NEW kiosk outlet.
 
 THE USER'S FORM provides: targetArea (name), lat, lng (exact GPS from Google Maps), budgetRange, businessType.
